@@ -1,4 +1,4 @@
-package de.fv.responseentitymatchers.matcher;
+package de.ferderer.responseentitymatchers.matcher;
 
 import org.hamcrest.Matcher;
 

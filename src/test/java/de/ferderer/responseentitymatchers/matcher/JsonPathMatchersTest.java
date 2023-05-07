@@ -1,6 +1,6 @@
-package de.fv.responseentitymatchers.matcher;
+package de.ferderer.responseentitymatchers.matcher;
 
-import static de.fv.responseentitymatchers.matcher.MatcherFactory.*;
+import static de.ferderer.responseentitymatchers.matcher.MatcherFactory.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;

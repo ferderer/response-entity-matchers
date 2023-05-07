@@ -1,4 +1,4 @@
-package de.fv.responseentitymatchers.matcher;
+package de.ferderer.responseentitymatchers.matcher;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
@@ -12,14 +12,17 @@ import org.springframework.http.ResponseEntity;
 
 /**
  * Factory for response header assertions. An instance of this
- * class is typically accessed via {@link ResultMatchers#header()}.
+ * class is typically accessed via {@link MatcherFactory#header()}.
  *
  * @author Vadim Ferderer
  * @since 1.0
  */
 public class HeaderMatchers {
 
-    HeaderMatchers() {}
+	/**
+	 * Protected constructor. See {@link MatcherFactory#header()}.
+	 */
+    protected HeaderMatchers() {}
 
     /**
      * Assert the primary value of the response header with the given Hamcrest String {@code Matcher}.

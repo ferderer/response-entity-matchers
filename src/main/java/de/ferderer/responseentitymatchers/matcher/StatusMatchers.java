@@ -1,4 +1,4 @@
-package de.fv.responseentitymatchers.matcher;
+package de.ferderer.responseentitymatchers.matcher;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertTrue;

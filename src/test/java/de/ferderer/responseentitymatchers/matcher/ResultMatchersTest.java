@@ -1,18 +1,17 @@
-package de.fv.responseentitymatchers.matcher;
+package de.ferderer.responseentitymatchers.matcher;
 
-import static de.fv.responseentitymatchers.matcher.MatcherFactory.*;
+import static de.ferderer.responseentitymatchers.matcher.MatcherFactory.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 import org.springframework.http.ResponseEntity;
 
 public class ResultMatchersTest {
     private static final String JSON = "{\"str\": \"foo\", \"utf8Str\": \"PÅ™Ã­liÅ¡\", \"num\": 5.2, \"bool\": true, \"arr\""
         + ": [42], \"colorMap\": {\"red\": \"rojo\"}, \"emptyString\": \"\", \"emptyArray\": [], \"emptyMap\": {}}";
-    private static final ResponseEntity<?> RE = re(JSON, APPLICATION_JSON);
+    private static final ResponseEntity<?> RE = re(JSON, MediaType.APPLICATION_JSON);
 
     private static ResponseEntity<?> re(String body, MediaType contentType) {
         return ResponseEntity.ok().contentType(contentType).body(body);
