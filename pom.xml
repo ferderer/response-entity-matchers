@@ -285,6 +285,20 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.simplify4u.plugins</groupId>
+                    <artifactId>sign-maven-plugin</artifactId>
+                    <version>1.0.1</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>1.6.13</version>
@@ -324,7 +338,8 @@
                     </plugin>
 
                     <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
+                        <groupId>org.simplify4u.plugins</groupId>
+                        <artifactId>sign-maven-plugin</artifactId>
                     </plugin>
 
                     <plugin>
