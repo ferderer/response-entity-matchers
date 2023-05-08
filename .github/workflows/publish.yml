@@ -19,6 +19,7 @@ jobs:
         server-password: ${{ secrets.OSSRH_PASSWORD }}
         gpg-private-key: ${{ secrets.SIGN_KEY }}
         gpg-passphrase: ${{ secrets.SIGN_KEY_PASS }}
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
     - name: build and publish
       run: mvn clean package deploy -P release --batch-mode
       env:
