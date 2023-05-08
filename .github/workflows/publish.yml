@@ -15,16 +15,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         server-id: ossrh
-        server-username: MAVEN_USERNAME
-        server-password: MAVEN_PASSWORD
-    - name: build
-      run: mvn clean package -P release
+        server-username: ${{ secrets.OSSRH_USERNAME }}
+        server-password: ${{ secrets.OSSRH_PASSWORD }}
+    - name: build and publish
+      run: mvn clean package deploy -P release --batch-mode
       env:
         SIGN_KEY: ${{ secrets.SIGN_KEY }}
         SIGN_KEY_ID: ${{ secrets.SIGN_KEY_ID }}
         SIGN_KEY_PASS: ${{ secrets.SIGN_KEY_PASS }}
-    - name: publish
-      run: mvn --batch-mode deploy
-      env:
-        MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-        MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
