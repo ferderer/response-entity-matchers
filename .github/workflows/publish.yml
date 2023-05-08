@@ -17,6 +17,8 @@ jobs:
         server-id: ossrh
         server-username: ${{ secrets.OSSRH_USERNAME }}
         server-password: ${{ secrets.OSSRH_PASSWORD }}
+        gpg-private-key: ${{ secrets.SIGN_KEY }}
+        gpg-passphrase: ${{ secrets.SIGN_KEY_PASS }}
     - name: build and publish
       run: mvn clean package deploy -P release --batch-mode
       env:
