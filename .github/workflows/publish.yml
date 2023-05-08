@@ -17,11 +17,10 @@ jobs:
         server-id: ossrh
         server-username: ${{ secrets.OSSRH_USERNAME }}
         server-password: ${{ secrets.OSSRH_PASSWORD }}
-        gpg-private-key: ${{ secrets.SIGN_KEY }}
-        gpg-passphrase: ${{ secrets.SIGN_KEY_PASS }}
         settings-path: ${{ github.workspace }} # location for the settings.xml file
+        cache: 'maven'
     - name: build and publish
-      run: mvn deploy -P release -B -s settings.xml
+      run: mvn deploy -P release -B -s ${{ github.workspace }}/settings.xml
       env:
         SIGN_KEY: ${{ secrets.SIGN_KEY }}
         SIGN_KEY_ID: ${{ secrets.SIGN_KEY_ID }}
