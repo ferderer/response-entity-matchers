@@ -145,18 +145,12 @@
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>
-                            <phase>verify</phase>
+                            <phase>package</phase>
                             <goals>
                                 <goal>sign</goal>
                             </goals>
                         </execution>
                     </executions>
-                    <configuration>
-                        <gpgArguments>
-                            <arg>--pinentry-mode</arg>
-                            <arg>loopback</arg>
-                        </gpgArguments>
-                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -223,6 +217,36 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>net.nicoulaj.maven.plugins</groupId>
+                    <artifactId>checksum-maven-plugin</artifactId>
+                    <version>1.11</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>artifacts</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <appendFilename>true</appendFilename>
+                        <algorithms>
+                            <algorithm>md5</algorithm>
+                            <algorithm>sha1</algorithm>
+                            <algorithm>SHA-512</algorithm>
+                        </algorithms>
+                        <fileSets>
+                            <fileSet>
+                                <includes>
+                                    <include>*.jar</include>
+                                    <include>*.pom</include>
+                                </includes>
+                            </fileSet>
+                        </fileSets>
+                    </configuration>
+                </plugin>
+
+                <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.10</version>
@@ -261,7 +285,7 @@
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>ossrh</serverId>
-                        <nexusUrl>https://s01.oss.sonatype.org</nexusUrl>
+                        <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
                 </plugin>
@@ -277,10 +301,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
-
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 
@@ -290,11 +310,20 @@
             <build>
                 <plugins>
                     <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
                     </plugin>
 
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>net.nicoulaj.maven.plugins</groupId>
+                        <artifactId>checksum-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
