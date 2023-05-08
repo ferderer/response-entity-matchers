@@ -5,7 +5,7 @@
 >
     <groupId>de.ferderer</groupId>
     <artifactId>response-entity-matchers</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>ResponseEntity-Matchers</name>
@@ -32,6 +32,13 @@
         <developerConnection>scm:git:ssh://git@github.com/ferderer/response-entity-matchers.git</developerConnection>
         <url>https://github.com/ferderer/response-entity-matchers</url>
     </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -160,26 +167,6 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>3.0.1</version>
-                    <executions>
-                        <execution>
-                            <id>sign-artifacts</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <gpgArguments>
-                            <arg>--pinentry-mode</arg>
-                            <arg>loopback</arg>
-                        </gpgArguments>
-                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -368,6 +355,11 @@
                     <plugin>
                         <groupId>net.nicoulaj.maven.plugins</groupId>
                         <artifactId>checksum-maven-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
