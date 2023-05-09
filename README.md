@@ -6,10 +6,9 @@
 ResponseEntity-Matchers provides Hamcrest matchers to assert the response returned by the Spring's RestTemplate.
 
 ## Motivation
-Spring Framework provides MockMvc to test MVC controllers, however, MockMvc only tests the request dispatcher, and sometimes we want to test the whole thing. For example, Crnk (which implements JSON:API) provides a separate servlet. MockMvc also can't test error handling in its entirety, as well as the JSP output. This small library allows you to run the same tests against a real server.
-Integration testing is, in my humble opinion, more important than ever. I can't but agree with James Coplien and others that integration testing (or even higher orders of testing) should prevail over the unit testing. But if this is true, then we always should opt for testing the real thing over mocks.
-As the reader probably knows, Spring Frameworks offers a beautiful way to test controllers via the MockMvc. Unfortunately, MockMvc is not the real thing, and can't help in several cases. For example, JSON:API's implementation library Crnk doesn't go through a Spring controller, and cannot be tested via the MockMvc. JSP is another case, where MockMvc is of little use. And if you wish to test all the filters, for example error handling in its entirety, you are also stuck. 
-That was the reason to provide a library, which provides the same interface, but tests the real server.
+Spring Framework provides MockMvc to test MVC controllers, however, MockMvc only tests the request dispatcher, and sometimes we want to test the whole thing. For example, Crnk (which implements JSON:API) provides a separate servlet. MockMvc also can't test error handling in its entirety, as well as the JSP output.
+
+As the reader probably knows, Spring Frameworks offers a beautiful way to test controllers via the MockMvc. Unfortunately, MockMvc is not the real thing, and can't help in several cases. For example, JSON:API's implementation library Crnk doesn't go through a Spring controller, and cannot be tested via the MockMvc. JSP is another case, where MockMvc is of little use. And if you wish to test all the filters, for example error handling in its entirety, you are also stuck. That was the reason to provide a library, which provides the same interface, but tests the real server. 
 
 ## Installation
 The library is available via Maven Central:
