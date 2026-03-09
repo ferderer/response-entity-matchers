@@ -4,18 +4,18 @@ import de.ferderer.responseentitymatchers.handler.ResponseHandler;
 import de.ferderer.responseentitymatchers.matcher.ResponseMatcher;
 import org.springframework.http.ResponseEntity;
 
-public class ReponseActions {
+public class ResponseActions {
 
     private final ResponseEntity<?> response;
 
-    public ReponseActions(ResponseEntity<?> response) {
+    public ResponseActions(ResponseEntity<?> response) {
         this.response = response;
     }
 
     /**
      * Performs on assertion on the response entity.
      */
-    public ReponseActions andExpect(ResponseMatcher matcher) throws Exception {
+    public ResponseActions andExpect(ResponseMatcher matcher) throws Exception {
         matcher.match(response);
         return this;
     }
@@ -23,7 +23,7 @@ public class ReponseActions {
     /**
      * Executes an action on the response entity.
      */
-    public ReponseActions andDo(ResponseHandler handler) throws Exception {
+    public ResponseActions andDo(ResponseHandler handler) throws Exception {
         handler.handle(response);
         return this;
     }

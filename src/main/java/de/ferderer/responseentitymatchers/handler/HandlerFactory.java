@@ -5,6 +5,12 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Static factory methods for creating response handlers.
+ *
+ * @author Vadim Ferderer
+ * @since 1.0
+ */
 public class HandlerFactory {
 
     /**
@@ -40,9 +46,12 @@ public class HandlerFactory {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public void handle(ResponseEntity<?> result) throws Exception {
-            printWriter.println(((ResponseEntity<String>) result).getBody());
+            printWriter.println("Status: " + result.getStatusCode());
+            result.getHeaders().forEach((name, values) ->
+                values.forEach(value -> printWriter.println(name + ": " + value)));
+            printWriter.println();
+            printWriter.println(result.getBody());
         }
     }
 

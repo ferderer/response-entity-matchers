@@ -4,13 +4,21 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 import org.hamcrest.Matcher;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
+/**
+ * Factory for response status assertions. An instance of this
+ * class is typically accessed via {@link MatcherFactory#status()}.
+ *
+ * @author Vadim Ferderer
+ * @since 1.0
+ */
 public class StatusMatchers {
 
     /**
      * Assert the response status code with the given Hamcrest {@link Matcher}.
      */
-    public ResponseMatcher is(Matcher<HttpStatus> matcher) {
+    public ResponseMatcher is(Matcher<? super HttpStatusCode> matcher) {
         return result -> assertTrue("Response status", matcher.matches(result.getStatusCode()));
     }
 
@@ -87,13 +95,6 @@ public class StatusMatchers {
      */
     public ResponseMatcher isEarlyHints() {
         return matcher(HttpStatus.EARLY_HINTS);
-    }
-
-    /**
-     * Assert the response status code is {@code HttpStatus.CHECKPOINT} (103).
-     */
-    public ResponseMatcher isCheckpoint() {
-        return matcher(HttpStatus.valueOf(103));
     }
 
     /**
@@ -212,7 +213,7 @@ public class StatusMatchers {
      * Assert the response status code is {@code HttpStatus.PERMANENT_REDIRECT} (308).
      */
     public ResponseMatcher isPermanentRedirect() {
-        return matcher(HttpStatus.valueOf(308));
+        return matcher(HttpStatus.PERMANENT_REDIRECT);
     }
 
     /**
@@ -345,7 +346,7 @@ public class StatusMatchers {
      * Assert the response status code is {@code HttpStatus.I_AM_A_TEAPOT} (418).
      */
     public ResponseMatcher isIAmATeapot() {
-        return matcher(HttpStatus.valueOf(418));
+        return matcher(HttpStatus.I_AM_A_TEAPOT);
     }
 
     /**
@@ -373,7 +374,7 @@ public class StatusMatchers {
      * Assert the response status code is {@code HttpStatus.TOO_EARLY} (425).
      */
     public ResponseMatcher isTooEarly() {
-        return matcher(HttpStatus.valueOf(425));
+        return matcher(HttpStatus.TOO_EARLY);
     }
 
     /**
@@ -387,28 +388,28 @@ public class StatusMatchers {
      * Assert the response status code is {@code HttpStatus.PRECONDITION_REQUIRED} (428).
      */
     public ResponseMatcher isPreconditionRequired() {
-        return matcher(HttpStatus.valueOf(428));
+        return matcher(HttpStatus.PRECONDITION_REQUIRED);
     }
 
     /**
      * Assert the response status code is {@code HttpStatus.TOO_MANY_REQUESTS} (429).
      */
     public ResponseMatcher isTooManyRequests() {
-        return matcher(HttpStatus.valueOf(429));
+        return matcher(HttpStatus.TOO_MANY_REQUESTS);
     }
 
     /**
      * Assert the response status code is {@code HttpStatus.REQUEST_HEADER_FIELDS_TOO_LARGE} (431).
      */
     public ResponseMatcher isRequestHeaderFieldsTooLarge() {
-        return matcher(HttpStatus.valueOf(431));
+        return matcher(HttpStatus.REQUEST_HEADER_FIELDS_TOO_LARGE);
     }
 
     /**
      * Assert the response status code is {@code HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS} (451).
      */
     public ResponseMatcher isUnavailableForLegalReasons() {
-        return matcher(HttpStatus.valueOf(451));
+        return matcher(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
     }
 
     /**
@@ -475,13 +476,6 @@ public class StatusMatchers {
     }
 
     /**
-     * Assert the response status code is {@code HttpStatus.BANDWIDTH_LIMIT_EXCEEDED} (509).
-     */
-    public ResponseMatcher isBandwidthLimitExceeded() {
-        return matcher(HttpStatus.valueOf(509));
-    }
-
-    /**
      * Assert the response status code is {@code HttpStatus.NOT_EXTENDED} (510).
      */
     public ResponseMatcher isNotExtended() {
@@ -492,7 +486,7 @@ public class StatusMatchers {
      * Assert the response status code is {@code HttpStatus.NETWORK_AUTHENTICATION_REQUIRED} (511).
      */
     public ResponseMatcher isNetworkAuthenticationRequired() {
-        return matcher(HttpStatus.valueOf(511));
+        return matcher(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
     }
 
     /**

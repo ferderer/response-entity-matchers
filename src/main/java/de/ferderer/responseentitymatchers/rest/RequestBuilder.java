@@ -12,6 +12,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Fluent request builder.
+ *
+ * @author Vadim Ferderer
+ * @since 1.0
  */
 public class RequestBuilder {
 
@@ -36,9 +39,9 @@ public class RequestBuilder {
      *
      * @return response entity encapsulated as a functional action object
      */
-    public ReponseActions perform() {
+    public ResponseActions perform() {
         var uri = uriBuilder.queryParams(params).buildAndExpand(vars).toUri();
-        return new ReponseActions(client.exchange(uri, method, new HttpEntity<>(content, headers), String.class));
+        return new ResponseActions(client.exchange(uri, method, new HttpEntity<>(content, headers), String.class));
     }
 
     /**
@@ -71,6 +74,13 @@ public class RequestBuilder {
     public RequestBuilder withHeader(String name, String value) {
         headers.add(name, value);
         return this;
+    }
+
+    /**
+     * Add a header. Alias for {@link #withHeader(String, String)} for MockMvc compatibility.
+     */
+    public RequestBuilder header(String name, String value) {
+        return withHeader(name, value);
     }
 
     /**

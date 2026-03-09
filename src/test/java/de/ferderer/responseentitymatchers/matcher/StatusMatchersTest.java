@@ -16,8 +16,9 @@ import org.springframework.util.StringUtils;
 public class StatusMatchersTest {
 
     private static final Set<String> DEPRECATED_STATUS_VALUES = new HashSet<>(Arrays.asList(
-        "CHECKPOINT", "MOVED_TEMPORARILY", "USE_PROXY", "METHOD_FAILURE", "REQUEST_ENTITY_TOO_LARGE",
-        "REQUEST_URI_TOO_LONG", "INSUFFICIENT_SPACE_ON_RESOURCE", "DESTINATION_LOCKED"));
+        "CHECKPOINT", "BANDWIDTH_LIMIT_EXCEEDED", "MOVED_TEMPORARILY", "USE_PROXY", "METHOD_FAILURE",
+        "REQUEST_ENTITY_TOO_LARGE", "REQUEST_URI_TOO_LONG", "INSUFFICIENT_SPACE_ON_RESOURCE",
+        "DESTINATION_LOCKED"));
 
     @Test
     public void testAll() throws Exception {

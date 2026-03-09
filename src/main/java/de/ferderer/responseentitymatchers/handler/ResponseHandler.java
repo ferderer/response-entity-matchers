@@ -3,9 +3,9 @@ package de.ferderer.responseentitymatchers.handler;
 import org.springframework.http.ResponseEntity;
 
 /**
- * A {@code ResponseHandler} performs a generic action on the response enity of the executed request.
+ * A {@code ResponseHandler} performs a generic action on the response entity of the executed request.
  *
- * <p>See static factory methods in {@link de.ferderer.responseentitymatchers.matcher.MatcherFactory}
+ * <p>See static factory methods in {@link de.ferderer.responseentitymatchers.handler.HandlerFactory}
  *
  * <b>Example</b>
  *

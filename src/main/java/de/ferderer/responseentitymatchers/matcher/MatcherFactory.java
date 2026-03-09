@@ -2,6 +2,12 @@ package de.ferderer.responseentitymatchers.matcher;
 
 import org.hamcrest.Matcher;
 
+/**
+ * Static factory methods for creating response matchers.
+ *
+ * @author Vadim Ferderer
+ * @since 1.0
+ */
 public class MatcherFactory {
 
     /**

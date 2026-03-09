@@ -5,7 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import de.ferderer.responseentitymatchers.WebTestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 
+@TestPropertySource("/application-test.properties")
 public class RestTestBaseIT extends WebTestBase {
 
     private static final String USER = "{\"username\":\"Jane Doe\",\"firstname\":\"Jane\",\"lastname\":\"Doe\"}";

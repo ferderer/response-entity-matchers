@@ -1,19 +1,15 @@
 package de.ferderer.responseentitymatchers;
 
 import de.ferderer.responseentitymatchers.rest.RequestBuilder;
-import de.ferderer.responseentitymatchers.rest.ReponseActions;
+import de.ferderer.responseentitymatchers.rest.ResponseActions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpMethod;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource("/application-test.properties")
-@ContextConfiguration
 public abstract class WebTestBase {
 
     @Value("${testing.default-base-url:http://localhost}")
@@ -39,7 +35,7 @@ public abstract class WebTestBase {
     /**
      * Executes the request and returns fluent interface for assertion chaining.
      */
-    public ReponseActions perform(RequestBuilder builder) throws Exception {
+    public ResponseActions perform(RequestBuilder builder) throws Exception {
         return builder.perform();
     }
 
@@ -69,5 +65,26 @@ public abstract class WebTestBase {
      */
     public RequestBuilder delete(String url, Object... vars) {
         return new RequestBuilder(client, HttpMethod.DELETE, fixUrl(url), vars);
+    }
+
+    /**
+     * Creates {@link RequestBuilder} for a PATCH request.
+     */
+    public RequestBuilder patch(String url, Object... vars) {
+        return new RequestBuilder(client, HttpMethod.PATCH, fixUrl(url), vars);
+    }
+
+    /**
+     * Creates {@link RequestBuilder} for a HEAD request.
+     */
+    public RequestBuilder head(String url, Object... vars) {
+        return new RequestBuilder(client, HttpMethod.HEAD, fixUrl(url), vars);
+    }
+
+    /**
+     * Creates {@link RequestBuilder} for an OPTIONS request.
+     */
+    public RequestBuilder options(String url, Object... vars) {
+        return new RequestBuilder(client, HttpMethod.OPTIONS, fixUrl(url), vars);
     }
 }

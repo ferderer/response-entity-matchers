@@ -4,12 +4,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
-import java.io.UnsupportedEncodingException;
 import javax.xml.transform.Source;
 import org.hamcrest.Matcher;
-import org.springframework.http.HttpEntity;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.http.MediaType;
-import org.springframework.test.util.JsonExpectationsHelper;
 import org.springframework.test.util.XmlExpectationsHelper;
 import org.w3c.dom.Node;
 
@@ -22,17 +20,13 @@ import org.w3c.dom.Node;
  */
 public class ContentMatchers {
 
-	private final XmlExpectationsHelper xmlHelper;
-    private final JsonExpectationsHelper jsonHelper;
+	private static final XmlExpectationsHelper xmlHelper = new XmlExpectationsHelper();
 
     /**
      * Protected constructor, not for direct instantiation.
      * Use {@link MatcherFactory#content()}.
      */
-    protected ContentMatchers() {
-        this.jsonHelper = new JsonExpectationsHelper();
-        this.xmlHelper = new XmlExpectationsHelper();
-    }
+    protected ContentMatchers() {}
 
     /**
      * Assert the entity response content type.
@@ -82,7 +76,7 @@ public class ContentMatchers {
      * </pre>
      */
     public ResponseMatcher string(Matcher<String> matcher) {
-        return result -> assertThat("Response content", getContent(result), matcher);
+        return result -> assertThat("Response content", ResponseEntityUtils.getBody(result), matcher);
     }
 
     /**
@@ -99,14 +93,14 @@ public class ContentMatchers {
 	 * <p>Use of this matcher requires the <a href="https://www.xmlunit.org/">XMLUnit</a> library.
 	 */
 	public ResponseMatcher xml(String xmlContent) {
-		return result -> xmlHelper.assertXmlEqual(xmlContent, getContent(result));
+		return result -> xmlHelper.assertXmlEqual(xmlContent, ResponseEntityUtils.getBody(result));
 	}
 
 	/**
 	 * Parse the response content as {@link Node} and apply the given Hamcrest {@link Matcher}.
 	 */
 	public ResponseMatcher node(Matcher<? super Node> matcher) {
-		return result -> xmlHelper.assertNode(getContent(result), matcher);
+		return result -> xmlHelper.assertNode(ResponseEntityUtils.getBody(result), matcher);
 	}
 
 	/**
@@ -114,7 +108,7 @@ public class ContentMatchers {
 	 * @see <a href="https://code.google.com/p/xml-matchers/">xml-matchers</a>
 	 */
 	public ResponseMatcher source(Matcher<? super Source> matcher) {
-		return result -> xmlHelper.assertSource(getContent(result), matcher);
+		return result -> xmlHelper.assertSource(ResponseEntityUtils.getBody(result), matcher);
 	}
 
 	/**
@@ -138,11 +132,6 @@ public class ContentMatchers {
      * Usage of this matcher requires the <a href="https://jsonassert.skyscreamer.org/">JSONassert</a> library.
      */
     public ResponseMatcher json(String jsonContent, boolean strict) {
-        return result -> jsonHelper.assertJsonEqual(jsonContent, getContent(result), strict);
-    }
-
-    @SuppressWarnings("unchecked")
-    private String getContent(HttpEntity<?> result) throws UnsupportedEncodingException {
-        return ((HttpEntity<String>) result).getBody();
+        return result -> JSONAssert.assertEquals(jsonContent, ResponseEntityUtils.getBody(result), strict);
     }
 }

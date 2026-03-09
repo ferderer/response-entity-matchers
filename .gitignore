@@ -8,5 +8,13 @@ target/
 *.ipr
 *.iws
 
+## Eclipse
+.classpath
+.project
+.settings/
+
+## VS Code
+.vscode/
+
 ## NetBeans
 nbproject/

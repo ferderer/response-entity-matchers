@@ -1,8 +1,6 @@
 package de.ferderer.responseentitymatchers.matcher;
 
-import java.io.UnsupportedEncodingException;
 import org.hamcrest.Matcher;
-import org.springframework.http.HttpEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.test.util.JsonPathExpectationsHelper;
 
@@ -22,7 +20,7 @@ public class JsonPathMatchers {
     private final JsonPathExpectationsHelper jsonPathHelper;
 
     protected JsonPathMatchers(String expression, Object... args) {
-        this.jsonPathHelper = new JsonPathExpectationsHelper(expression, args);
+        this.jsonPathHelper = new JsonPathExpectationsHelper(String.format(expression, args));
     }
 
     /**
@@ -30,7 +28,7 @@ public class JsonPathMatchers {
      * assert the resulting value with the given Hamcrest {@link Matcher}.
      */
     public <T> ResponseMatcher value(Matcher<? super T> matcher) {
-        return result -> jsonPathHelper.assertValue(getContent(result), matcher);
+        return result -> jsonPathHelper.assertValue(ResponseEntityUtils.getBody(result), matcher);
     }
 
     /**
@@ -39,7 +37,7 @@ public class JsonPathMatchers {
      * This can be useful for matching numbers reliably &mdash; for example, to coerce an integer into a double.
      */
     public <T> ResponseMatcher value(Matcher<? super T> matcher, Class<T> targetType) {
-        return result -> jsonPathHelper.assertValue(getContent(result), matcher, targetType);
+        return result -> jsonPathHelper.assertValue(ResponseEntityUtils.getBody(result), matcher, targetType);
     }
 
     /**
@@ -47,7 +45,7 @@ public class JsonPathMatchers {
      * assert that the result is equal to the supplied value.
      */
     public ResponseMatcher value(@Nullable Object expectedValue) {
-        return result -> jsonPathHelper.assertValue(getContent(result), expectedValue);
+        return result -> jsonPathHelper.assertValue(ResponseEntityUtils.getBody(result), expectedValue);
     }
 
     /**
@@ -57,7 +55,7 @@ public class JsonPathMatchers {
      * at the given path is not <em>empty</em>.
      */
     public ResponseMatcher exists() {
-        return result -> jsonPathHelper.exists(getContent(result));
+        return result -> jsonPathHelper.exists(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -68,7 +66,7 @@ public class JsonPathMatchers {
      * this method asserts that the value at the given path is <em>empty</em>.
      */
     public ResponseMatcher doesNotExist() {
-        return result -> jsonPathHelper.doesNotExist(getContent(result));
+        return result -> jsonPathHelper.doesNotExist(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -79,7 +77,7 @@ public class JsonPathMatchers {
      * {@link org.springframework.util.ObjectUtils#isEmpty(Object)}.
      */
     public ResponseMatcher isEmpty() {
-        return result -> jsonPathHelper.assertValueIsEmpty(getContent(result));
+        return result -> jsonPathHelper.assertValueIsEmpty(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -90,7 +88,7 @@ public class JsonPathMatchers {
      * {@link org.springframework.util.ObjectUtils#isEmpty(Object)}.
      */
     public ResponseMatcher isNotEmpty() {
-        return result -> jsonPathHelper.assertValueIsNotEmpty(getContent(result));
+        return result -> jsonPathHelper.assertValueIsNotEmpty(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -102,7 +100,7 @@ public class JsonPathMatchers {
      * that the list of values at the given path is not <em>empty</em>.
      */
     public ResponseMatcher hasJsonPath() {
-        return result -> jsonPathHelper.hasJsonPath(getContent(result));
+        return result -> jsonPathHelper.hasJsonPath(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -115,7 +113,7 @@ public class JsonPathMatchers {
      * that the list of values at the given path is <em>empty</em>.
      */
     public ResponseMatcher doesNotHaveJsonPath() {
-        return result -> jsonPathHelper.doesNotHaveJsonPath(getContent(result));
+        return result -> jsonPathHelper.doesNotHaveJsonPath(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -123,7 +121,7 @@ public class JsonPathMatchers {
      * assert that the result is a {@link String}.
      */
     public ResponseMatcher isString() {
-        return result -> jsonPathHelper.assertValueIsString(getContent(result));
+        return result -> jsonPathHelper.assertValueIsString(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -131,7 +129,7 @@ public class JsonPathMatchers {
      * assert that the result is a {@link Boolean}.
      */
     public ResponseMatcher isBoolean() {
-        return result -> jsonPathHelper.assertValueIsBoolean(getContent(result));
+        return result -> jsonPathHelper.assertValueIsBoolean(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -139,7 +137,7 @@ public class JsonPathMatchers {
      * assert that the result is a {@link Number}.
      */
     public ResponseMatcher isNumber() {
-        return result -> jsonPathHelper.assertValueIsNumber(getContent(result));
+        return result -> jsonPathHelper.assertValueIsNumber(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -147,7 +145,7 @@ public class JsonPathMatchers {
      * assert that the result is an array.
      */
     public ResponseMatcher isArray() {
-        return result -> jsonPathHelper.assertValueIsArray(getContent(result));
+        return result -> jsonPathHelper.assertValueIsArray(ResponseEntityUtils.getBody(result));
     }
 
     /**
@@ -155,11 +153,6 @@ public class JsonPathMatchers {
      * assert that the result is a {@link java.util.Map}.
      */
     public ResponseMatcher isMap() {
-        return result -> jsonPathHelper.assertValueIsMap(getContent(result));
-    }
-
-    @SuppressWarnings("unchecked")
-    private String getContent(HttpEntity<?> result) throws UnsupportedEncodingException {
-        return ((HttpEntity<String>) result).getBody();
+        return result -> jsonPathHelper.assertValueIsMap(ResponseEntityUtils.getBody(result));
     }
 }

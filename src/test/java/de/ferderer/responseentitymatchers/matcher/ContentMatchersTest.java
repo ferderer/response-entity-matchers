@@ -3,9 +3,11 @@ package de.ferderer.responseentitymatchers.matcher;
 import static de.ferderer.responseentitymatchers.matcher.MatcherFactory.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.w3c.dom.Node;
 
 public class ContentMatchersTest {
     private static final String ATEXT = "Aliquam venenatis urna eu ultrices convallis";
@@ -15,11 +17,19 @@ public class ContentMatchersTest {
     private static final String RJSON = "{\"lastname\":\"Doe\",\"firstname\":\"John\"}";
     private static final String BJSON = "{\"firstname\":\"Jane\",\"lastname\":\"Doe\"}";
 
+    private static final String AXML = "<person><name>John</name><age>30</age></person>";
+    private static final String RXML = "<person><age>30</age><name>John</name></person>";
+    private static final String BXML = "<person><name>Jane</name><age>25</age></person>";
+
     private static final ResponseEntity<?> RE_ATEXT = build(ATEXT, MediaType.TEXT_PLAIN);
     private static final ResponseEntity<?> RE_BTEXT = build(BTEXT, MediaType.TEXT_PLAIN);
     private static final ResponseEntity<?> RE_AJSON = build(AJSON, MediaType.APPLICATION_JSON);
     private static final ResponseEntity<?> RE_BJSON = build(BJSON, MediaType.APPLICATION_JSON);
     private static final ResponseEntity<?> RE_RJSON = build(RJSON, MediaType.APPLICATION_JSON);
+
+    private static final ResponseEntity<?> RE_AXML = build(AXML, MediaType.APPLICATION_XML);
+    private static final ResponseEntity<?> RE_RXML = build(RXML, MediaType.APPLICATION_XML);
+    private static final ResponseEntity<?> RE_BXML = build(BXML, MediaType.APPLICATION_XML);
 
     private static ResponseEntity<?> build(String body, MediaType contentType) {
         return ResponseEntity.ok().contentType(contentType).body(body);
@@ -103,5 +113,25 @@ public class ContentMatchersTest {
     @Test
     public void jsonStrictContentMatcherShouldFail() throws Exception {
         assertThrows(AssertionError.class, () -> content().json(AJSON, true).match(RE_BJSON));
+    }
+
+    @Test
+    public void xmlContentMatcherShouldSucceed() throws Exception {
+        content().xml(AXML).match(RE_AXML);
+    }
+
+    @Test
+    public void xmlReorderedContentMatcherShouldSucceed() throws Exception {
+        content().xml(AXML).match(RE_RXML);
+    }
+
+    @Test
+    public void xmlContentMatcherShouldFail() throws Exception {
+        assertThrows(AssertionError.class, () -> content().xml(AXML).match(RE_BXML));
+    }
+
+    @Test
+    public void nodeMatcherShouldSucceed() throws Exception {
+        content().node(Matchers.notNullValue(Node.class)).match(RE_AXML);
     }
 }

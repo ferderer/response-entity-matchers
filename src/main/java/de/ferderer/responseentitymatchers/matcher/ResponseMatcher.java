@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 public interface ResponseMatcher {
 
     /**
-     * Performs an assertionon on the provided response entity.
+     * Performs an assertion on the provided response entity.
      */
     void match(ResponseEntity<?> responseEntity) throws Exception;
 }
