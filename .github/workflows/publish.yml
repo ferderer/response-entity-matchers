@@ -1,7 +1,8 @@
 name: Publish to Maven Central
 
 on:
-  workflow_dispatch:
+  release:
+    types: [created]
 
 jobs:
   publish:
@@ -19,17 +20,15 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
           server-id: central
-          # These must be env var *names*, not the secret values themselves.
-          # setup-java writes ${env.CENTRAL_USERNAME} placeholders into settings.xml,
-          # which Maven then resolves at runtime from the environment below.
           server-username: CENTRAL_USERNAME
           server-password: CENTRAL_PASSWORD
 
       - name: Publish to Maven Central
-        run: mvn deploy -P release -B --no-transfer-progress
+        run: |
+          mvn deploy -P release -B --no-transfer-progress
         env:
-          SIGN_KEY: ${{ secrets.SIGN_KEY }}
-          SIGN_KEY_ID: ${{ secrets.SIGN_KEY_ID }}
+          SIGN_KEY:     ${{ secrets.SIGN_KEY }}
+          SIGN_KEY_ID:  ${{ secrets.SIGN_KEY_ID }}
           SIGN_KEY_PASS: ${{ secrets.SIGN_KEY_PASS }}
-          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
-          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+          CENTRAL_USERNAME:  ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_PASSWORD:  ${{ secrets.CENTRAL_PASSWORD }}
