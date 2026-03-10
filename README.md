@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Maven Build](https://github.com/ferderer/response-entity-matchers/actions/workflows/maven.yml/badge.svg)](https://github.com/ferderer/response-entity-matchers/actions/workflows/maven.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.ferderer/response-entity-matchers/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.ferderer/response-entity-matchers)
+[![Maven Central](https://img.shields.io/maven-central/v/de.ferderer/response-entity-matchers)](https://central.sonatype.com/artifact/de.ferderer/response-entity-matchers)
 
 # response-entity-matchers
 
